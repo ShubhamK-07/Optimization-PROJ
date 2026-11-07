@@ -83,7 +83,7 @@ def compute_roughness(slope, water_mask, window_size=3):
         cval=np.nan
     )
 
-    roughness[~water_mask] = np.nan
+    roughness[~water_mask | ~np.isfinite(roughness)] = np.nan
 
     return roughness
 
@@ -157,3 +157,76 @@ def compute_curvature(elevation, x, y, water_mask):
     )
 
     return curvature
+
+def normalize_feature(feature, valid_mask):
+    """
+    Apply min-max normalization using only valid cells.
+
+    Invalid cells remain NaN.
+    """
+
+    feature = np.asarray(feature, dtype=float)
+    valid_mask = np.asarray(valid_mask, dtype=bool)
+
+    normalized = np.full(feature.shape, np.nan, dtype=float)
+
+    values = feature[valid_mask]
+
+    if values.size == 0:
+        raise ValueError("No valid cells available for normalization")
+
+    minimum = np.min(values)
+    maximum = np.max(values)
+
+    if np.isclose(maximum, minimum):
+        normalized[valid_mask] = 0.0
+    else:
+        normalized[valid_mask] = (
+            values - minimum
+        ) / (maximum - minimum)
+
+    return normalized
+
+
+def compute_risk(slope, roughness, curvature):
+    """
+    Compute combined terrain-risk field.
+
+    Risk = 0.5 * normalized_slope^2
+         + 0.3 * normalized_roughness
+         + 0.2 * normalized_curvature
+
+    All features use the same common valid-cell mask.
+    """
+
+    slope = np.asarray(slope, dtype=float)
+    roughness = np.asarray(roughness, dtype=float)
+    curvature = np.asarray(curvature, dtype=float)
+
+    if not (
+        slope.shape == roughness.shape == curvature.shape
+    ):
+        raise ValueError("All feature arrays must have the same shape")
+
+    valid_mask = (
+        np.isfinite(slope)
+        & np.isfinite(roughness)
+        & np.isfinite(curvature)
+    )
+
+    if not np.any(valid_mask):
+        raise ValueError("No common valid cells available")
+
+    slope_norm = normalize_feature(slope, valid_mask)
+    roughness_norm = normalize_feature(roughness, valid_mask)
+    curvature_norm = normalize_feature(curvature, valid_mask)
+
+    risk = np.full(slope.shape, np.nan, dtype=float)
+
+    risk[valid_mask] = (
+        0.5 * slope_norm[valid_mask] ** 2
+        + 0.3 * roughness_norm[valid_mask]
+        + 0.2 * curvature_norm[valid_mask]
+    )
+
+    return risk 

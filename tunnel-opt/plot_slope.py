@@ -16,7 +16,7 @@ plt.figure(figsize=(12, 6))
 
 plt.imshow(
     slope,
-    origin="upper",
+    origin="lower",
     extent=[
         data["x"].min(),
         data["x"].max(),
