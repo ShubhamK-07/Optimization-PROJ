@@ -1,0 +1,69 @@
+{
+  "dataset": "GEBCO_2026",
+  "source_file": "data\\raw\\gebco_gibraltar_initial.nc",
+  "bbox": {
+    "west": -5.65,
+    "east": -5.25,
+    "south": 35.92,
+    "north": 36.07
+  },
+  "crs": "EPSG:32630",
+  "resolution_m": 400.0,
+  "resampling": "nearest-neighbour source-cell sampling",
+  "shape_rows_columns": [
+    44,
+    91
+  ],
+  "valid_cells": 3759,
+  "total_cells": 4004,
+  "land_cells": 478,
+  "water_cells": 3281,
+  "land_fraction_of_valid_cells": 0.12716147911678638,
+  "elevation_min_m": -1002.0,
+  "elevation_max_m": 474.0,
+  "depth_min_m": 1.0,
+  "depth_max_m": 1002.0,
+  "endpoints": {
+    "A": {
+      "requested_lon": -5.547916666666675,
+      "requested_lat": 36.00208333333333,
+      "grid_x_m": 270296.52379288553,
+      "grid_y_m": 3987306.934357722,
+      "column": 23,
+      "row": 24,
+      "sampled_elevation_m": -117.0,
+      "sampled_depth_m": 117.0,
+      "is_water": true
+    },
+    "B": {
+      "requested_lon": -5.547916666666675,
+      "requested_lat": 35.95208333333333,
+      "grid_x_m": 270296.52379288553,
+      "grid_y_m": 3981706.934357722,
+      "column": 23,
+      "row": 10,
+      "sampled_elevation_m": -571.0,
+      "sampled_depth_m": 571.0,
+      "is_water": true
+    }
+  },
+  "distance_validation": {
+    "A_projected_m": {
+      "x": 270344.78175254713,
+      "y": 3987182.254014904
+    },
+    "B_projected_m": {
+      "x": 270199.7636509654,
+      "y": 3981634.83155792
+    },
+    "projected_distance_m": 5549.317630667408,
+    "geodesic_distance_m": 5547.928796693698,
+    "absolute_difference_m": 1.388833973709552,
+    "relative_difference_percent": 0.025033377763197525
+  },
+  "notes": [
+    "Exploratory working crop; final study bounds may be refined.",
+    "Depth is positive downward and represents seafloor depth, not tunnel depth below seabed.",
+    "Land is excluded from water_mask; original elevation values are retained in the array."
+  ]
+}

@@ -1,0 +1,23 @@
+project:
+  name: Underwater Tunnel Route Optimization
+  status: Phase 1 - data pipeline
+region:
+  name: Strait of Gibraltar - exploratory crop
+  bbox:
+    west: -5.65
+    east: -5.25
+    south: 35.92
+    north: 36.07
+projection:
+  epsg: EPSG:32630
+  resolution_m: 400
+endpoints:
+  A:
+    lon: -5.547916666666675
+    lat: 36.00208333333333
+  B:
+    lon: -5.547916666666675
+    lat: 35.95208333333333
+data:
+  raw_file: data/raw/gebco_gibraltar_initial.nc
+  processed_dir: data/processed
