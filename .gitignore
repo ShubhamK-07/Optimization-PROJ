@@ -1,10 +1,5 @@
-# Python virtual environment
 .venv/
-
-# Python cache
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
-
-# Local environment files
 .env
